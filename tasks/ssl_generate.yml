@@ -17,7 +17,7 @@
       state: directory
       owner: "{{ sensu_user_name }}"
       group: "{{ sensu_group_name }}"
-    when: sensu_master
+#    when: sensu_master
 
   - block:
 
@@ -27,11 +27,7 @@
         dest: "{{ sensu_config_path }}/ssl_generation/sensu_ssl_tool.tar"
 
     - name: Untar the ssl_certs tarball from sensuapp.org
-      unarchive:
-      args:
-        src: "{{ sensu_config_path }}/ssl_generation/sensu_ssl_tool.tar"
-        dest: "{{ sensu_config_path }}/ssl_generation/"
-        creates: "{{ sensu_config_path }}/ssl_generation/sensu_ssl_tool"
+      command: /bin/tar -xvf /etc/sensu/ssl_generation/sensu_ssl_tool.tar -C /etc/sensu/ssl_generation/
 
     - name: Generate SSL certs
       command: "_ {{ sensu_config_path }}/ssl_generation/sensu_ssl_tool/ssl_certs.sh generate"

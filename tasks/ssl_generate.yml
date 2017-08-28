@@ -10,6 +10,7 @@
       state: directory
       owner: "{{ sensu_user_name }}"
       group: "{{ sensu_group_name }}"
+    become: true
 
   - name: Ensure SSL generation directory exists
     file:
@@ -17,7 +18,8 @@
       state: directory
       owner: "{{ sensu_user_name }}"
       group: "{{ sensu_group_name }}"
-#    when: sensu_master
+    become: true
+    #when: sensu_master
 
   - block:
 

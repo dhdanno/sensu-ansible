@@ -5,3 +5,4 @@
 
   - name: Ensure redis is running
     service: name={{ redis_service_name }} state=started enabled=true
+    become: true

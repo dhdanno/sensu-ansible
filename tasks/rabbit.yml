@@ -7,6 +7,7 @@
 
   - name: Ensure RabbitMQ SSL directory exists
     file: dest={{ rabbitmq_config_path }}/ssl state=directory
+    become: true
 
   - name: Ensure RabbitMQ SSL certs/keys are in place
     copy: src={{ item }} dest={{ rabbitmq_config_path }}/ssl
@@ -18,6 +19,7 @@
       - restart rabbitmq service
       - restart sensu-api service
       - restart sensu-server service
+    become: true
 
   - name: Deploy RabbitMQ config
     template:
@@ -27,12 +29,14 @@
       group: "{{ __root_group }}"
       mode: 0644
     notify: restart rabbitmq service
+    become: true
 
   - name: Ensure RabbitMQ is running
     service:
       name: "{{ rabbitmq_service_name }}"
       state: started
       enabled: true
+    become: true
     register: rabbitmq_state
 
   - name: Wait for RabbitMQ to be up and running before asking to create a vhost

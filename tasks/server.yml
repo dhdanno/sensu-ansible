@@ -10,6 +10,7 @@
       recurse: true
       owner: "{{ sensu_user_name }}"
       group: "{{ sensu_group_name }}"
+    become: true
 
   - name: Deploy Sensu server API configuration
     template:
@@ -18,6 +19,7 @@
       group: "{{ sensu_group_name }}"
       src: sensu-api.json.j2
     notify: restart sensu-api service
+    become: true
 
   - name: Deploy Sensu redis configuration
     template:
@@ -26,12 +28,15 @@
       group: "{{ sensu_group_name }}"
       src: sensu-redis.json.j2
     notify: restart sensu-api service
+    become: true
 
   - include: SmartOS/server.yml
     when: ansible_distribution == "SmartOS"
 
   - name: Ensure Sensu server service is running
     service: name=sensu-server state=started enabled=yes
+    become: true
 
   - name: Ensure Sensu API service is running
     service: name=sensu-api state=started enabled=yes
+    become: true

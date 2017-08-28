@@ -11,10 +11,12 @@
       sha256sum: "{{ uchiwa_pkg_download_sha256sum }}"
 
   - name: Install Uchiwa from the retrieved deb package
-    apt: deb={{ uchiwa_pkg_download_path }} 
+    apt: deb={{ uchiwa_pkg_download_path }}
+    become: true
 
   - name: Deploy Uchiwa config
     template:
       src: uchiwa_config.json.j2
       dest: "{{ sensu_config_path }}/uchiwa.json"
     notify: restart uchiwa service
+    become: true

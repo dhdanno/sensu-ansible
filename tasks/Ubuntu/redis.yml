@@ -9,14 +9,17 @@
       repo: "{{ redis_pkg_repo }}"
       state: present
       update_cache: true
+    become: true
 
   - name: Ensure redis is installed
     apt:
       name: "{{ redis_pkg_name }}"
       state: "{{ redis_pkg_state }}"
       update_cache: true
+    become: true
 
   - name: Deploy redis systemd service manifest
     copy:
       src: redis_systemd.service
       dest: /etc/systemd/system/redis.service
+    become: true

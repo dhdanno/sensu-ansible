@@ -11,10 +11,11 @@
       group: "{{ sensu_group_name }}"
 
   - name: Ensure any remote plugins defined are present
-    shell: sensu-install -p {{ item }}
-    with_items: sensu_remote_plugins
+    shell: "sensu-install -p {{ item }}"
+    with_items: "{{ sensu_remote_plugins }}"
     changed_when: false
-    when: sensu_remote_plugins > 0
+    when: not( (sensu_remote_plugins is undefined) or (sensu_remote_plugins is none) or (sensu_remote_plugins | trim == '') )
+    become: true
 
   - name: Register available checks
     local_action: command ls {{ static_data_store }}/sensu/checks
@@ -42,6 +43,7 @@
       owner: "{{ sensu_user_name }}"
       group: "{{ sensu_group_name }}"
     notify: restart sensu-client service
+    become: true
 
   - name: Deploy filter plugins
     copy:
@@ -51,6 +53,7 @@
       owner: "{{ sensu_user_name }}"
       group: "{{ sensu_group_name }}"
     notify: restart sensu-client service
+    become: true
 
   - name: Deploy mutator plugins
     copy:
@@ -60,6 +63,7 @@
       owner: "{{ sensu_user_name }}"
       group: "{{ sensu_group_name }}"
     notify: restart sensu-client service
+    become: true
 
   - name: Deploy check/handler/filter/mutator definitions to the master
     template:
@@ -73,3 +77,5 @@
     notify:
       - restart sensu-server service
       - restart sensu-api service
+    become: true
+

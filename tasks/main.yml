@@ -3,6 +3,9 @@
 
   - include_vars: "{{ ansible_distribution }}.yml"
 
+  #- debug: var="{{ groups['sensu_masters'][0] }}"
+  #- debug: var=hostvars[groups['sensu_masters'][0]].ansible_default_ipv4.address
+
   - include: "{{ ansible_distribution }}/main.yml"
     tags: setup
 

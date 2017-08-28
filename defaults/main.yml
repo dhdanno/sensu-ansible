@@ -6,7 +6,8 @@ sensu_deploy_redis: true
 # RabbitMQ server properties
 rabbitmq_config_path: /etc/rabbitmq
 rabbitmq_config_template: rabbitmq.config.j2
-rabbitmq_host: "{{ groups['rabbitmq_servers'][0] }}"
+rabbitmq_host: "{{ groups['sensu_masters'][0] }}"
+rabbitmq_host_private: "{{ hostvars[groups['sensu_masters'][0]].ansible_default_ipv4.address }}"
 rabbitmq_port: 5671
 rabbitmq_pkg_state: present
 rabbitmq_server: false
@@ -16,7 +17,8 @@ rabbitmq_sensu_password: sensu
 rabbitmq_sensu_vhost: /sensu
 
 # redis server properties
-redis_host: "{{ groups['redis_servers'][0] }}"
+#redis_host: "{{ groups['sensu_masters'][0] }}"
+redis_host: "127.0.0.1"
 redis_server: false
 redis_service_name: redis
 redis_pkg_repo: ~
@@ -26,6 +28,7 @@ redis_port: 6379
 
 # Sensu/Uchiwa user/group/service properties
 sensu_api_host: "{{ groups['sensu_masters'][0] }}"
+sensu_api_host_private: "{{ hostvars[groups['sensu_masters'][0]].ansible_default_ipv4.address }}"
 sensu_api_port: 4567
 sensu_api_ssl: "false"
 sensu_api_user_name: admin
@@ -42,7 +45,12 @@ sensu_include_plugins: true
 sensu_include_dashboard: false
 sensu_master: false
 sensu_user_name: sensu
-sensu_remote_plugins: ~
+sensu_remote_plugins:
+  - sensu-plugins-disk-checks
+  - sensu-plugins-graphite
+  - sensu-plugins-network-checks
+  - sensu-plugins-http
+  - sensu-plugins-ssl
 sensu_transport: rabbitmq
 
 # Sensu/RabbitMQ SSL certificate properties
@@ -57,7 +65,7 @@ sensu_ssl_server_key: "{{ sensu_ssl_tool_base_path }}/server/key.pem"
 sensu_ssl_tool_version: "0.23"
 
 # Uchiwa properties
-uchiwa_dc_name: ~
+uchiwa_dc_name: "Virginia"
 uchiwa_path: /opt/uchiwa
 uchiwa_redis_use_ssl: false
 uchiwa_users:

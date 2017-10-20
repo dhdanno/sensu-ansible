@@ -32,7 +32,7 @@
       command: /bin/tar -xvf /etc/sensu/ssl_generation/sensu_ssl_tool.tar -C /etc/sensu/ssl_generation/
 
     - name: Generate SSL certs
-      command: "_ {{ sensu_config_path }}/ssl_generation/sensu_ssl_tool/ssl_certs.sh generate"
+      command: "{{ sensu_config_path }}/ssl_generation/sensu_ssl_tool/ssl_certs.sh generate"
       args:
         chdir: "{{ sensu_config_path }}/ssl_generation/sensu_ssl_tool"
         creates: "{{ sensu_config_path }}/ssl_generation/sensu_ssl_tool/server"

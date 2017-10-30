@@ -65,17 +65,36 @@
     notify: restart sensu-client service
     become: true
 
-  - name: Deploy check/handler/filter/mutator definitions to the master
+    ### Traditional Method ###
+  # - name: Deploy check/handler/filter/mutator definitions to the master
+  #   template:
+  #     src: "{{ item }}"
+  #     dest: "{{ sensu_config_path }}/conf.d/{{ item | basename | regex_replace('.j2', '')}}"
+  #     owner: "{{ sensu_user_name }}"
+  #     group: "{{ sensu_group_name }}"
+  #   when: sensu_master
+  #   with_fileglob:
+  #     - "{{ static_data_store }}/sensu/definitions/*"
+  #   notify:
+  #     - restart sensu-server service
+  #     - restart sensu-api service
+  #   become: true
+
+    ### Optionally Take checks stored in a remote repo ###
+
+  - name: Deploy locally cloned check definitions to the master
     template:
       src: "{{ item }}"
-      dest: "{{ sensu_config_path }}/conf.d/{{ item | basename | regex_replace('.j2', '')}}"
+      dest: "/etc/sensu/conf.d/{{ item | basename | regex_replace('.j2', '') }}"
       owner: "{{ sensu_user_name }}"
       group: "{{ sensu_group_name }}"
     when: sensu_master
     with_fileglob:
-      - "{{ static_data_store }}/sensu/definitions/*"
+      - "/{{ local_check_repo }}/{{ region }}/conf.d/checks/*"
     notify:
       - restart sensu-server service
       - restart sensu-api service
     become: true
+    tags:
+       - populate
 

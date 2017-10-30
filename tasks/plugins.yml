@@ -90,7 +90,7 @@
       group: "{{ sensu_group_name }}"
     when: sensu_master
     with_fileglob:
-      - "/{{ local_check_repo }}/{{ region }}/conf.d/checks/*"
+      - "/{{ local_check_repo }}/{{ region }}/definitions/*"
     notify:
       - restart sensu-server service
       - restart sensu-api service

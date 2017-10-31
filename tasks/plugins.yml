@@ -88,7 +88,7 @@
       dest: "/etc/sensu/conf.d/{{ item | basename | regex_replace('.j2', '') }}"
       owner: "{{ sensu_user_name }}"
       group: "{{ sensu_group_name }}"
-    when: sensu_master
+    #when: sensu_master
     with_fileglob:
       - "{{ local_check_repo }}/{{ region }}/definitions/*"
     notify:

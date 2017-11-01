@@ -51,6 +51,7 @@ sensu_remote_plugins:
   - sensu-plugins-network-checks
   - sensu-plugins-http
   - sensu-plugins-ssl
+  - sensu-plugins-dns
 sensu_transport: rabbitmq
 
 # Sensu/RabbitMQ SSL certificate properties

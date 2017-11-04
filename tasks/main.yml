@@ -32,6 +32,7 @@
 
   - include: client.yml
     tags: client
+    when: sensu_client
 
   - include: plugins.yml
     tags: plugins

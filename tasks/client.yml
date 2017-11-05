@@ -53,3 +53,9 @@
   - name: Ensure Sensu client service is running
     service: name=sensu-client state=started enabled=yes
     become: true
+
+  - name: Ensure Sensu client service is set to autostart
+    service:
+      name: sensu-client
+      enabled: True
+      use: service

@@ -82,6 +82,11 @@
 
     ### Optionally Take checks stored in a remote repo ###
 
+  - name: Create definitions dir
+    file:
+      path: /etc/sensu/conf.d/definitions
+      state: directory
+
   - name: Deploy locally cloned check definitions to the master
     template:
       src: "{{ item }}"

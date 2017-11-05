@@ -39,6 +39,12 @@
     become: true
     register: rabbitmq_state
 
+  - name: Ensure RabbitMQ is set to autostart
+    service:
+      name: "{{ rabbitmq_service_name }}"
+      enabled: True
+      use: service
+
   - name: Wait for RabbitMQ to be up and running before asking to create a vhost
     pause: seconds=3
     when: rabbitmq_state|changed

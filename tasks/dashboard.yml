@@ -5,3 +5,9 @@
   - name: Ensure Uchiwa server service is running
     service: name=uchiwa state=started enabled=yes
     become: true
+
+  - name: Ensure Uchiwa service is set to autostart
+    service:
+      name: uchiwa
+      enabled: True
+      use: service

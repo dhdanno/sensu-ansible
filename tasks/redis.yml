@@ -6,3 +6,9 @@
   - name: Ensure redis is running
     service: name={{ redis_service_name }} state=started enabled=true
     become: true
+
+  - name: Ensure redis is set to autostart
+    service:
+      name: "{{ redis_service_name }}"
+      enabled: True
+      use: service

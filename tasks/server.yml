@@ -40,3 +40,15 @@
   - name: Ensure Sensu API service is running
     service: name=sensu-api state=started enabled=yes
     become: true
+
+  - name: Ensure Sensu server service is set to autostart
+    service:
+      name: sensu-server
+      enabled: True
+      use: service
+
+  - name: Ensure Sensu API service is set to autostart
+    service:
+      name: sensu-api
+      enabled: True
+      use: service

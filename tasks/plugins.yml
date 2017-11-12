@@ -82,24 +82,24 @@
 
     ### Optionally Take checks stored in a remote repo ###
 
-  - name: Create definitions dir
-    file:
-      path: /etc/sensu/conf.d/definitions
-      state: directory
+  # - name: Create definitions dir
+  #   file:
+  #     path: /etc/sensu/conf.d/definitions
+  #     state: directory
 
-  - name: Deploy locally cloned check definitions to the master
-    template:
-      src: "{{ item }}"
-      dest: "/etc/sensu/conf.d/{{ item | basename | regex_replace('.j2', '') }}"
-      owner: "{{ sensu_user_name }}"
-      group: "{{ sensu_group_name }}"
-    when: sensu_master
-    with_fileglob:
-      - "{{ local_check_repo }}/{{ region }}/definitions/*"
-    notify:
-      - restart sensu-server service
-      - restart sensu-api service
-    become: true
-    tags:
-       - populate
+  # - name: Deploy locally cloned check definitions to the master
+  #   template:
+  #     src: "{{ item }}"
+  #     dest: "/etc/sensu/conf.d/{{ item | basename | regex_replace('.j2', '') }}"
+  #     owner: "{{ sensu_user_name }}"
+  #     group: "{{ sensu_group_name }}"
+  #   when: sensu_master
+  #   with_fileglob:
+  #     - "{{ local_check_repo }}/{{ region }}/definitions/*"
+  #   notify:
+  #     - restart sensu-server service
+  #     - restart sensu-api service
+  #   become: true
+  #   tags:
+  #      - populate
 

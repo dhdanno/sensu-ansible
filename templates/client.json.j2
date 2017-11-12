@@ -2,6 +2,12 @@
   "client": {
     "name": "{{ ansible_hostname }}",
     "address": "{{ ansible_default_ipv4['address'] }}",
-      "subscriptions": [ "roundrobin:sensu_clients" ]
+      "subscriptions":
+        [ "roundrobin:sensu_clients" ],
+    "tags": {
+      "environment": "prod",
+      "ansible_hostname": "{{ ansible_hostname }}",
+      "region": "{{ region }}"
+    }
   }
 }

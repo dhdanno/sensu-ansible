@@ -1,6 +1,6 @@
 {
   "client": {
-    "name": "{{ ansible_hostname }}",
+    "name": "{{ region }}",
     "address": "{{ ansible_default_ipv4['address'] }}",
       "subscriptions":
         [ "roundrobin:sensu_clients" ],

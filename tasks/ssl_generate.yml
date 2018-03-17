@@ -29,7 +29,7 @@
         dest: "{{ sensu_config_path }}/ssl_generation/sensu_ssl_tool.tar"
 
     - name: Untar the ssl_certs tarball from sensuapp.org
-      command: /bin/tar -xvf /etc/sensu/ssl_generation/sensu_ssl_tool.tar -C /etc/sensu/ssl_generation/
+      command: /bin/tar -xvf {{ sensu_config_path }}/ssl_generation/sensu_ssl_tool.tar -C {{ sensu_config_path }}/ssl_generation/
 
     - name: Generate SSL certs
       command: "{{ sensu_config_path }}/ssl_generation/sensu_ssl_tool/ssl_certs.sh generate"
